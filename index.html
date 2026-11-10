@@ -253,8 +253,8 @@ if(B.galeria.fotos.length)h+=`<section class="rv"><h2>${B.galeria.titulo}</h2><p
 const evitar=()=>{const e=(B.dressCode||{}).evitar||[];return e.length?`<span class="evit"><span class="mini" style="display:block;margin:14px 0 8px">Evita estos colores</span>${e.map(([c,n])=>`<span class="sw"><i style="background:${c}"></i><small>${n}</small></span>`).join('')}</span>`:''};
 const mods=[];
 if(B.sugerirCancion!==false)mods.push(['musica','Música','¿Cuál es la canción que no puede faltar en la fiesta?','Sugerir canción','m-musica']);
-if(B.dressCode&&B.dressCode.titulo)mods.push(['mono','Dress Code',(B.dressCode.titulo?`<b style="font-style:normal;color:var(--texto)">${B.dressCode.titulo}</b><br>`:'')+'Una orientación para tu vestimenta'+evitar(),'Ver más','m-dress']);
-if(B.notas&&B.notas.length)mods.push(['notas','Tips y Notas','Información adicional a considerar','Ver más','m-notas']);
+if(B.dressCode&&B.dressCode.titulo)mods.push(['mono','Código de vestimenta',(B.dressCode.titulo?`<b style="font-style:normal;color:var(--texto)">${B.dressCode.titulo}</b><br>`:'')+'Una orientación para tu vestimenta'+evitar(),'Ver más','m-dress']);
+if(B.notas&&B.notas.length)mods.push(['notas','Recomendaciones','Información adicional a considerar','Ver más','m-notas']);
 if(B.regalos)mods.push(['regalo','Regalos','Si deseas regalarnos algo, aquí van algunas ideas','Ver más','m-regalos']);
 h+=`<section>${G()}<div class="mods">${mods.map(([ic,t,s,b,id])=>`<div class="card rv"><h2 style="font-size:32px">${t}</h2><div class="ico">${ICON[ic]}</div><p class="sub">${s}</p><button class="btn" data-m="${id}">${b}</button></div>`).join('')}</div></section>`;
 // fotos QR
@@ -268,10 +268,10 @@ h+=`<section id="cierre" class="rv">${G(1)}<div class="nombres">${B.novia}<i>&am
 // modales
 const R=B.regalos||{};
 h+=`<div class="modal" id="m-musica"><div class="card"><button class="x">×</button><div class="ico">${ICON.musica}</div><h2 style="font-size:32px">Sugerir canción</h2>
- <form data-tipo="cancion"><label>Tu nombre<input name="n" required></label><label>Canción y artista<input name="c" required></label><label>Link de YouTube (opcional)<input name="l"></label><button class="btn">Enviar sugerencia</button></form></div></div>`;
-h+=`<div class="modal" id="m-dress"><div class="card"><button class="x">×</button><div class="ico">${ICON.mono}</div><h2 style="font-size:32px">Dress Code</h2><p class="mini">${(B.dressCode||{}).titulo||''}</p><p>${(B.dressCode||{}).texto||''}</p>
+ <form data-tipo="cancion"><label>Tu nombre<input name="n" required></label><label>Canción y artista<input name="c" required></label><label>Enlace de YouTube (opcional)<input name="l"></label><button class="btn">Enviar sugerencia</button></form></div></div>`;
+h+=`<div class="modal" id="m-dress"><div class="card"><button class="x">×</button><div class="ico">${ICON.mono}</div><h2 style="font-size:32px">Código de vestimenta</h2><p class="mini">${(B.dressCode||{}).titulo||''}</p><p>${(B.dressCode||{}).texto||''}</p>
  ${evitar()}${(B.dressCode&&B.dressCode.colores||[]).length?`<p class="mini">Paleta sugerida</p><div class="paleta">${B.dressCode.colores.map(c=>`<i style="background:${c}"></i>`).join('')}</div>`:''}</div></div>`;
-h+=`<div class="modal" id="m-notas"><div class="card"><button class="x">×</button><div class="ico">${ICON.notas}</div><h2 style="font-size:32px">Tips y Notas</h2><ul>${(B.notas||[]).map(n=>`<li>${n}</li>`).join('')}</ul></div></div>`;
+h+=`<div class="modal" id="m-notas"><div class="card"><button class="x">×</button><div class="ico">${ICON.notas}</div><h2 style="font-size:32px">Recomendaciones</h2><ul>${(B.notas||[]).map(n=>`<li>${n}</li>`).join('')}</ul></div></div>`;
 h+=`<div class="modal" id="m-regalos"><div class="card"><button class="x">×</button><div class="ico">${ICON.regalo}</div><h2 style="font-size:32px">Regalos</h2><p>${R.texto||''}</p>
  ${(R.mesa||[]).map(([t,n,l])=>`<div class="dato"><span><b>${t}</b><br>${n}</span>${l?`<a class="btn" href="${l}" target="_blank" rel="noopener">Ver</a>`:''}</div>`).join('')}
  ${R.banco&&R.banco.clabe?`<p class="mini" style="margin-top:16px">Transferencia</p><div class="dato"><span><b>${R.banco.banco}</b><br>${R.banco.titular}<br>CLABE ${R.banco.clabe}</span><button data-copia="${R.banco.clabe}">Copiar</button></div>`:''}
@@ -316,7 +316,7 @@ function petalos(){let k=0;const t=setInterval(()=>{if(++k>18)return clearInterv
 // --- cuenta regresiva ---
 const ct=$('#cuenta');
 function tick(){let s=Math.max(0,(F-new Date())/1000);const d=Math.floor(s/86400),hh=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),se=Math.floor(s%60);
-  const vals=[d,hh,m,se];if(!ct.children.length)ct.innerHTML=['Días','hs','min','seg'].map(l=>`<div><b></b><small>${l}</small></div>`).join('');
+  const vals=[d,hh,m,se];if(!ct.children.length)ct.innerHTML=['Días','horas','min','seg'].map(l=>`<div><b></b><small>${l}</small></div>`).join('');
   ct.querySelectorAll('b').forEach((b,i)=>{if(b.textContent!==String(vals[i])){b.textContent=vals[i];b.classList.remove('salta');void b.offsetWidth;b.classList.add('salta')}})}
 tick();setInterval(tick,1000);
 // --- galería y visor ---
