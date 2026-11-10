@@ -7,7 +7,7 @@ window.BODA = {
   portada: "img/portada-video.jpg",
   portadaVideo: "img/portada.mp4",
   versiculo: { texto: "Uno solo puede ser vencido, pero dos pueden resistir. ¡La cuerda de tres hilos no se rompe fácilmente!", cita: "Eclesiastés 4:12 (NVI)" },
-  musica: "musica.mp3",                 // "Un pacto con Dios", saxofón instrumental
+  musica: "musica.mp3?v=2",               // "A Thousand Years", dueto de violín y sax
 
   // blanco, verde olivo, flores verdes y negro
   tema: { fondo: "#FAF8F3", tarjeta: "#FFFFFF", acento: "#556B2F", dorado: "#8C9A6B", texto: "#1C1C1A" },
@@ -35,7 +35,7 @@ window.BODA = {
 
   fotosQR: { texto: "", link: "" },
 
-  whatsapp: "529511701965",
+  whatsapp: "529516545435",
   confirmarAntes: "10 de enero",
   pasesMax: 4,                          // PENDIENTE: confirmar el máximo de personas por invitación
   sugerirCancion: false,
