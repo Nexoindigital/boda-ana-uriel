@@ -39,6 +39,7 @@ window.BODA = {
   confirmarAntes: "10 de enero",
   pasesMax: 4,                          // PENDIENTE: confirmar el máximo de personas por invitación
   sugerirCancion: false,
+  follaje: true,
 
   hashtag: "",
   credito: "Invitación hecha por Nexo Digital",

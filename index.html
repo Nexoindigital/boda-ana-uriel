@@ -56,6 +56,7 @@ section{padding:56px 26px;position:relative}
 @keyframes baja{50%{transform:translateY(8px) rotate(45deg)}}
 /* guirnalda */
 .guir{height:96px;margin:0 -26px;overflow:hidden}
+.follaje .guir{height:120px}
 .guir svg{width:100%;height:100%}
 /* raspar */
 .circs{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;max-width:320px;margin:0 auto}
@@ -183,6 +184,7 @@ body:not(.cerrado) #portada .in>*:nth-child(4){animation-delay:.8s}
 <audio id="audio" loop preload="auto"></audio>
 <script>
 const B=window.BODA, $=s=>document.querySelector(s), app=$('#app');
+if(B.follaje)document.documentElement.classList.add('follaje');
 const r=document.documentElement.style;for(const k in B.tema)r.setProperty('--'+k,B.tema[k]);
 const F=new Date(B.fecha);
 const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -206,15 +208,35 @@ const ICON={
 };
 // guirnalda de rosas blancas dibujada a mano (SVG)
 function guirnalda(flip){
-  let s=`<svg viewBox="0 0 520 96" preserveAspectRatio="xMidYMid slice"${flip?' style="transform:scaleY(-1)"':''}>`;
+  let s=`<svg viewBox="0 0 520 ${B.follaje?120:96}" preserveAspectRatio="xMidYMid slice"${flip?' style="transform:scaleY(-1)"':''}>`;
   let seed=7;const rnd=()=>(seed=(seed*9301+49297)%233280)/233280;
-  for(let i=0;i<34;i++){const x=rnd()*540-10,y=20+rnd()*40,a=rnd()*360;
-    s+=`<ellipse cx="${x}" cy="${y}" rx="20" ry="7" fill="${rnd()>.5?'#6F8565':'#4F6B4A'}" transform="rotate(${a} ${x} ${y})" opacity=".9"/>`}
-  for(let i=0;i<20;i++){const x=i*27+rnd()*12-6,y=26+rnd()*30,R=13+rnd()*8;
+  const H=B.follaje?120:96, cy=H/2;
+  if(B.follaje){
+    // eucalipto dólar: ramitas curvas con hojas redondas
+    const eu=['#9DB5A7','#8AA597','#B2C6B8','#7F9C8C'];
+    for(let i=0;i<16;i++){const x0=i*35+rnd()*20-10,y0=cy+rnd()*20-10,dir=rnd()>.5?1:-1,len=55+rnd()*35,ang=(rnd()*50+15)*dir;
+      const r=ang*Math.PI/180,dx=Math.cos(r)*len*(rnd()>.5?1:-1),dy=Math.sin(r)*len*.55;
+      s+=`<path d="M${x0} ${y0} q ${dx*.5} ${dy*.2} ${dx} ${dy}" stroke="#6E8B7D" stroke-width="1.4" fill="none"/>`;
+      for(let k=1;k<=5;k++){const t=k/5.6,px=x0+dx*t,py=y0+dy*t*t+dy*0*(1-t),rr=8.5-k*.9;
+        for(const sd of[-1,1]){const ox=-dy/len*rr*1.1*sd,oy=dx/len*rr*1.1*sd;
+          s+=`<circle cx="${px+ox}" cy="${py+oy}" r="${rr}" fill="${eu[(i+k+(sd>0?1:0))%4]}" stroke="#6E8B7D" stroke-width=".6" opacity=".95"/>`}}}
+  }
+  // hojas verdes alargadas
+  for(let i=0;i<(B.follaje?44:34);i++){const x=rnd()*540-10,y=cy-28+rnd()*56,a=rnd()*360;
+    s+=`<ellipse cx="${x}" cy="${y}" rx="${B.follaje?22:20}" ry="${B.follaje?6.5:7}" fill="${['#6F8565','#4F6B4A','#556B2F','#7D9150'][Math.floor(rnd()*(B.follaje?4:2))]}" transform="rotate(${a} ${x} ${y})" opacity=".92"/>`}
+  // rosas blancas
+  const nR=B.follaje?13:20, paso=B.follaje?42:27;
+  for(let i=0;i<nR;i++){const x=i*paso+rnd()*14-7,y=cy-12+rnd()*26,R=(B.follaje?12:13)+rnd()*8;
     s+=`<g transform="translate(${x} ${y})"><circle r="${R}" fill="#FBF8F1" stroke="#E2D9C6"/>`;
     for(let k=0;k<5;k++){const rr=R*(.85-k*.16);s+=`<circle r="${rr}" cx="${(k%2?1:-1)*rr*.18}" cy="${rr*.12}" fill="none" stroke="#D9CFBA" stroke-width="1.1"/>`}
     s+=`<circle r="${R*.18}" fill="#EFE6D3"/></g>`}
-  for(let i=0;i<26;i++){const x=rnd()*520,y=12+rnd()*64;s+=`<circle cx="${x}" cy="${y}" r="${2+rnd()*2}" fill="#fff" stroke="#E8DFCC"/>`}
+  // florecitas verdes de 5 pétalos
+  if(B.follaje)for(let i=0;i<18;i++){const x=rnd()*520,y=cy-30+rnd()*60,R=5+rnd()*3.5,c=['#C9D7A6','#B3C68A','#D6E0B8'][i%3];
+    s+=`<g transform="translate(${x} ${y}) rotate(${rnd()*72})">`;
+    for(let k=0;k<5;k++)s+=`<ellipse cx="0" cy="${-R*.8}" rx="${R*.55}" ry="${R*.85}" fill="${c}" stroke="#8FA36A" stroke-width=".5" transform="rotate(${k*72})"/>`;
+    s+=`<circle r="${R*.35}" fill="#7D9150"/></g>`}
+  // botoncitos blancos (nube)
+  for(let i=0;i<26;i++){const x=rnd()*520,y=cy-34+rnd()*68;s+=`<circle cx="${x}" cy="${y}" r="${2+rnd()*2}" fill="#fff" stroke="#E8DFCC"/>`}
   return s+'</svg>';
 }
 const G=f=>`<div class="guir">${guirnalda(f)}</div>`;
