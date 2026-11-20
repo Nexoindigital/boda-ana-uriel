@@ -37,7 +37,7 @@ window.BODA = {
 
   whatsapp: "529516545435",
   confirmarAntes: "10 de enero",
-  pasesMax: 4,                          // PENDIENTE: confirmar el máximo de personas por invitación
+  pasesMax: 6,                          // máximo de personas por invitación (confirmado 19-nov)
   sugerirCancion: false,
   follaje: true,
 
